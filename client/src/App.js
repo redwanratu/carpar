@@ -5,7 +5,7 @@ import Slot from "./components/Slot";
 function App() {  const [slotState, setSlotState] = useState();
 
   const fetchData = () => {
-    return fetch("http://localhost:10000/api/v1/status")
+    return fetch(`${window.location.href}api/v1/status`)
           .then((res) => res.json())
           .then((data) => setSlotState(data.data[0]))
           .catch((err) => console.log(err)); 
@@ -14,6 +14,7 @@ function App() {  const [slotState, setSlotState] = useState();
   useEffect(() => {
     fetchData()
   });
+  // console.log(`${window.location.href}api/v1/status`)
   return (
     <div className="App">
       <main className="flex flex-col items-center justify-center mt-20">
