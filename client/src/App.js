@@ -5,16 +5,20 @@ import Slot from './components/Slot';
 function App() {
   const [slotState, setSlotState] = useState();
 
-  const fetchData = () => {
-    return fetch(`${window.location.href}api/v1/status`)
-      .then((res) => res.json())
-      .then((data) => setSlotState(data.data[0]))
-      .catch((err) => console.log(err));
-  };
-
   useEffect(() => {
-    fetchData();
-  });
+    const interval = setInterval(() => {
+      fetch(`${window.location.href}api/v1/status`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.data[0]);
+        setSlotState((prevState) => ({ ...data.data[0] }));
+      })
+      .catch((err) => console.log(err));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  console.log(slotState);
   // console.log(`${window.location.href}api/v1/status`)
   return (
     <div className="App">
